@@ -3,6 +3,7 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const router = require('./router');
 
 // create instance of express
 const app = express();
@@ -14,6 +15,7 @@ const app = express();
 // morgan is a logging framework
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
+router(app);
 
 // Server setup
 // express talking to outside
