@@ -9,6 +9,11 @@ const app = express();
 
 // App setup
 // get express working
+// boilerplate 
+// morgan and bodyparser are middleware (incoming req passed into)
+// morgan is a logging framework
+app.use(morgan('combined'));
+app.use(bodyParser.json({ type: '*/*' }));
 
 // Server setup
 // express talking to outside
@@ -18,4 +23,3 @@ const port = process.env.PORT || 3090;
 const server = http.createServer(app);
 server.listen(port);
 console.log('Server listening on:', port);
-
