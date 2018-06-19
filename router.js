@@ -5,5 +5,5 @@ module.exports = function(app) {
     res.send(['ps4', 'pc', 'asus']);
   });
 
-
+  
 }
