@@ -1,5 +1,17 @@
+const jwt = require('jwt-simple');
 // pull req/res logic here
 const User = require('../models/user');
+const config = require('../config');
+
+// function to take user's id and encode with secret
+function toketForUser(user) {
+  const timestamp = new Date().getTime();
+  // should use user id, not email b/c it can change
+  // what is sub?  jwt is a standard, sub (subject) => who this token belongs to
+  // iad: issued at time  
+  // doc: https://jwt.io/
+  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+}
 
 exports.signup = function (req, res, next) {
   // req.body : anything contained in post req
@@ -39,7 +51,7 @@ exports.signup = function (req, res, next) {
       if (err) { return next(err) }
 
       // respond to request indicating user was created
-      res.json({ success: 'true'} );
+      res.json({ token: toketForUser(user) } );
 
     });
 
