@@ -35,3 +35,4 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
 });
 
 // tell passport to use this strategy
+passport.use(jwtLogin);
