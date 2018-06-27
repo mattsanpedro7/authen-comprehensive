@@ -33,6 +33,16 @@ userSchema.pre('save', function(next) {
   })
 });
 
+// whatever we define, have access to methods property
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+  // this references user model
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) { return callback(err); }
+
+    callback(null, isMatch);
+  });
+}
+
 // create model class - represents all users
 const ModelClass = mongoose.model('user', userSchema);
 
