@@ -6,6 +6,24 @@ const User = require('../models/user');
 const config = require('../config');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const LocalStrategy = require('passport-local');
+
+// create local strategy
+// 1st argument: expect username and password by default
+// 2nd argument: callback function
+const localOptions = { usernameField: 'email' };
+const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
+    // verufy email and password, call done with the user
+    // if it is the correct email and passowrd
+    // otherwise, call done with false
+    User.findOne( {email: email }, function(err, user) {
+        if (err) {return done(err); }
+        if (!user) { return done(null, false); }
+
+        // compare passwords - is 'password' = user.password?
+         
+    });
+});
 
 // setup options for JWT strategy
 // 1. expecting JwtStrategy is going to get access to jwt off req
