@@ -4,13 +4,23 @@ const User = require('../models/user');
 const config = require('../config');
 
 // function to take user's id and encode with secret
-function toketForUser(user) {
+function tokenForUser(user) {
   const timestamp = new Date().getTime();
   // should use user id, not email b/c it can change
   // what is sub?  jwt is a standard, sub (subject) => who this token belongs to
   // iad: issued at time  
   // doc: https://jwt.io/
   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+}
+
+// create controller for signin
+exports.signin = function(req, res, next) {
+  // user has already had their email and password auth'd
+  // we just need to give them a token
+
+  // somehow get access to current user model
+  // passport "has our back" && can access res object
+  res.send({ token: tokenForUser(req.user) });
 }
 
 exports.signup = function (req, res, next) {
